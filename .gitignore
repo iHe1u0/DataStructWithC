@@ -52,5 +52,6 @@ Mkfile.old
 dkms.conf
 
 # For Visual Stucio Code
+.vscode/
 .cache/
 build/
