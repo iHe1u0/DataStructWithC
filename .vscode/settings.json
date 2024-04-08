@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "datastruct.h": "c",
+    "sqlist.h": "c"
+  }
+}
