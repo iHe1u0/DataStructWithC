@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 3.25.0)
 project(DataStructWithC VERSION 1.0.0 LANGUAGES C)
 
 # 设置编译器选项,解决中文乱码
-if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-  # For GCC (MinGW on Windows)
-  add_compile_options(-fexec-charset=GBK)
-  add_compile_options(-Wall)
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+  if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+    # For GCC (MinGW on Windows)
+    add_compile_options(-fexec-charset=GBK)
+    add_compile_options(-Wall)
+  endif()
 endif()
 
 add_subdirectory(src/)
