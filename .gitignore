@@ -55,3 +55,7 @@ dkms.conf
 .vscode/
 .cache/
 build/
+
+# For Visual Studio
+.vs/
+out/

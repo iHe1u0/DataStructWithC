@@ -14,3 +14,6 @@ Status   init_sqlist(SqList* list);                         // 初始化线性�
 Status   insert_data(SqList* list, ElemType e, int index);  // 插入数据
 ElemType get_sqlist_data(SqList* list, int index);          // 获取线性表第index个位置的数据
 int      find_data(SqList* list, ElemType e);               // 查找数据,返回所在位置,要是没找到返回0
+Status   delete_elem(SqList* list, int index);              // 删除元素
+
+int sqlist_main();
