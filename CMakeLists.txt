@@ -1,13 +1,9 @@
 cmake_minimum_required(VERSION 3.25.0)
 project(DataStructWithC VERSION 1.0.0 LANGUAGES C)
 
-# 设置编译器选项,解决中文乱码
-if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-  if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-    message("Windows gcc compile...")
-    add_compile_options(-Wall)
-    add_compile_options(-O0)
-  endif()
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+  add_compile_options(-Wall)
+  add_compile_options(-O0 -g)
 endif()
 
 add_subdirectory(src/)
