@@ -1,45 +1,39 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "common.h"
 #include "sqlist.h"
 
-Status init_sqlist(SqList* list)
+SeqList* init_sqlist()
 {
-  // list = (SqList*)malloc(sizeof(SqList));
-  if (list != NULL)
-  {
-    list->elem = (ElemType*)malloc(sizeof(ElemType) * MAXSIZE);
-    list->length = 0;
-    if (list->elem != NULL)
-    {
-      return OK;
-    }
-  }
-  return Error;
+  SeqList* list;
+  list = malloc(sizeof(SeqList));
+  list->length = 0;
+  return list;
 }
 
-Status insert_data(SqList* list, ElemType e, int index)
+Status insert_data(SeqList* list, DataType data, int index)
 {
-  // 判断表是否没有初始化,以及插入位置是否在合理的范围内,即 0~MAXSIZE-1
-  if (list == NULL || index < 0 || index >= MAXSIZE)
+  // 判断表是否没有初始化,以及插入位置是否在合理的范围内,即 0~MaxSize-1
+  if (list == NULL || index < 0 || index >= MaxSize)
   {
     return Error;
   }
 
   // 判断表是否已满
-  if (list->length >= MAXSIZE)
+  if (list->length >= MaxSize)
   {
-    return Error;
+    return OutOfRange;
   }
 
   // 从插入位置开始，往后移动元素
   for (int current_index = list->length; current_index > index; current_index--)
   {
-    list->elem[current_index] = list->elem[current_index - 1];
+    list->value[current_index] = list->value[current_index - 1];
   }
 
   // 插入元素到指定位置
-  list->elem[index] = e;
+  list->value[index] = data;
 
   // 更新列表长度
   list->length++;
@@ -47,7 +41,7 @@ Status insert_data(SqList* list, ElemType e, int index)
   return OK;
 }
 
-ElemType get_sqlist_data(SqList* list, int index)
+DataType get_sqlist_data(SeqList* list, int index)
 {
   if (list == NULL)
   {
@@ -57,11 +51,11 @@ ElemType get_sqlist_data(SqList* list, int index)
   {
     exit(EXIT_CAUSE_OUT_OF_RANGE);
   }
-  ElemType e = list->elem[index];
-  return e;
+  DataType data = list->value[index];
+  return data;
 }
 
-int find_data(SqList* list, ElemType e)
+int locate_data(SeqList* list, DataType data)
 {
   if (list == NULL)
   {
@@ -69,7 +63,7 @@ int find_data(SqList* list, ElemType e)
   }
   for (int i = 0; i < list->length; i++)
   {
-    if (e == list->elem[i])
+    if (data == list->value[i])
     {
       return i + 1;
     }
@@ -77,7 +71,7 @@ int find_data(SqList* list, ElemType e)
   return NotFound;
 }
 
-Status delete_elem(SqList* list, int index)
+Status delete_elem(SeqList* list, int index)
 {
   if (list == NULL || index < 0 || index > list->length)
   {
@@ -89,19 +83,43 @@ Status delete_elem(SqList* list, int index)
   }
   for (int current_index = index; current_index < list->length; current_index++)
   {
-    list->elem[current_index] = list->elem[current_index + 1];
+    list->value[current_index] = list->value[current_index + 1];
   }
   list->length--;
   return OK;
 }
 
+void merge_list(SeqList a, SeqList b, SeqList* all)
+{
+  int index_a = 0, index_b = 0, index_c = 0;
+  while (index_a <= a.length && index_b <= b.length)
+  {
+    if (a.value[index_a] < b.value[index_b])
+    {
+      all->value[index_c++] = a.value[index_a++];
+    }
+    else
+    {
+      all->value[index_c++] = b.value[index_b++];
+    }
+  }
+  while (index_a <= a.length)
+  {
+    all->value[index_c++] = a.value[index_a++];
+  }
+  while (index_b <= b.length)
+  {
+    all->value[index_c++] = b.value[index_b++];
+  }
+}
+
 int sqlist_main()
 {
-  SqList sqlist;
+  SeqList* list;
   // 初始化
   {
-    Status status = init_sqlist(&sqlist);
-    if (status != OK)
+    list = init_sqlist();
+    if (list == NULL)
     {
       exit(EXIT_FAILURE);
     }
@@ -109,15 +127,15 @@ int sqlist_main()
   }
   // 插入数据
   {
-    for (int i = 0; i < MAXSIZE; i++)
+    for (int i = 0; i < MaxSize; i++)
     {
-      insert_data(&sqlist, i, i);
+      insert_data(list, i * i, i);
     }
     printf("数据插入完成.\n");
   }
   // 查找数据
   {
-    int index = find_data(&sqlist, 6);
+    int index = locate_data(list, 6);
     if (index != NotFound)
     {
       printf("查找元素[%d]成功: %d\n", 6, index);
@@ -128,10 +146,10 @@ int sqlist_main()
     }
   }
   // 删除数据
-  delete_elem(&sqlist, 6);
+  delete_elem(list, 6);
   // 删除元素后查找数据
   {
-    int index = find_data(&sqlist, 6);
+    int index = locate_data(list, 6);
     if (index != NotFound)
     {
       printf("查找元素[%d]成功: %d\n", 6, index);
@@ -141,5 +159,6 @@ int sqlist_main()
       printf("元素查找失败.\n");
     }
   }
-  return 0;
+
+  END(线性表测试)
 }
