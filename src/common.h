@@ -22,8 +22,13 @@ typedef enum
 #define print(data) printf("%d ", data)
 
 // 定义某个测试结束
+#if defined(__GNUC__) || defined(__clang__)
+#define FUNCTION_NAME __func__
+#elif defined(_MSC_VER)
+#define FUNCTION_NAME __FUNCTION__
+#endif
 #define END(x)                             \
-  printf("\t\t==%s测试结束===\t\t\n", #x); \
+  printf("\t%s测试结束\n", FUNCTION_NAME); \
   return 0;
 
 #endif  // !_DATASTRUCT_COMMON_H

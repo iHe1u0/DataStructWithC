@@ -187,6 +187,6 @@ int linklist_main()
   print_linklist(&list);
   // 销毁链表
   destroy_linklist(&list);
-  print_linklist(&list);
-  END(链表)
+  // print_linklist(&list);
+  END()
 }

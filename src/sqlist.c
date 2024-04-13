@@ -163,5 +163,5 @@ int sqlist_main()
   delete_elem(list, data);
   print_sqlist(list);
 
-  END(线性表)
+  END()
 }

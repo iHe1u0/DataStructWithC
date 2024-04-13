@@ -13,5 +13,5 @@ int main()
   sqlist_main();    // 测试线性表
   linklist_main();  // 测试链表
 
-  END(__iob_func)
+  END()
 }
