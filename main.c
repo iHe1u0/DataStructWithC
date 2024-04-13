@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "src/linklist.h"
 #include "src/sqlist.h"
@@ -12,5 +13,5 @@ int main()
   sqlist_main();    // 测试线性表
   linklist_main();  // 测试链表
 
-  return 0;
+  END(__iob_func)
 }

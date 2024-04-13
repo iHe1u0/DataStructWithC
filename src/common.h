@@ -8,9 +8,9 @@ typedef int DataType;
 // 定义状态码
 typedef enum
 {
-  OK,                          // 成功
-  Error,                       // 失败
-  NotFound = 10,               // 未找到
+  NotFound = -100,             // 未找到
+  OK = 0,                      // 成功
+  Error = 10,                  // 失败
   OutOfRange,                  // 数据已满
   EXIT_CAUSE_NULL = 100,       // 由于出现空指针而退出
   EXIT_CAUSE_OUT_OF_RANGE,     // 由于超出范围而退出
@@ -18,9 +18,12 @@ typedef enum
   NULL_POINTER,                // 空指针
 } Status;
 
+// 打印数据
+#define print(data) printf("%d ", data)
+
 // 定义某个测试结束
-#define END(x)                      \
-  printf("===%s测试结束===\n", #x); \
+#define END(x)                             \
+  printf("\t\t==%s测试结束===\t\t\n", #x); \
   return 0;
 
 #endif  // !_DATASTRUCT_COMMON_H

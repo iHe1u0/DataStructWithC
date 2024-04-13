@@ -113,6 +113,18 @@ void merge_list(SeqList a, SeqList b, SeqList* all)
   }
 }
 
+void print_sqlist(const SeqList* list)
+{
+  if (list != NULL)
+  {
+    for (int index = 0; index < list->length; index++)
+    {
+      print(list->value[index]);
+    }
+    printf("\n");
+  }
+}
+
 int sqlist_main()
 {
   SeqList* list;
@@ -127,18 +139,20 @@ int sqlist_main()
   }
   // 插入数据
   {
-    for (int i = 0; i < MaxSize; i++)
+    for (int i = 0; i < MaxSize * 0.1; i++)
     {
       insert_data(list, i * i, i);
     }
     printf("数据插入完成.\n");
   }
+  print_sqlist(list);
   // 查找数据
+  int data = 64;
+  int index = locate_data(list, data);
   {
-    int index = locate_data(list, 6);
     if (index != NotFound)
     {
-      printf("查找元素[%d]成功: %d\n", 6, index);
+      printf("查找元素[%d]成功: %d\n", data, index);
     }
     else
     {
@@ -146,19 +160,8 @@ int sqlist_main()
     }
   }
   // 删除数据
-  delete_elem(list, 6);
-  // 删除元素后查找数据
-  {
-    int index = locate_data(list, 6);
-    if (index != NotFound)
-    {
-      printf("查找元素[%d]成功: %d\n", 6, index);
-    }
-    else
-    {
-      printf("元素查找失败.\n");
-    }
-  }
+  delete_elem(list, data);
+  print_sqlist(list);
 
-  END(线性表测试)
+  END(线性表)
 }
